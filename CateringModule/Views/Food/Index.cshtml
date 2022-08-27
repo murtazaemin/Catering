@@ -1,0 +1,171 @@
+﻿@using CateringModule.Models
+@model  List<Food>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!--Page header-->
+<div class="page-header">
+    <div class="page-leftheader">
+        <h4 class="page-title mb-0 text-primary">YEMEK LİSTESİ</h4>
+    </div>
+    <div>
+        <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ModalFoodAdd"><i class="fa fa-plus-square"></i> YEMEK EKLE</a>
+    </div>
+</div>
+<!--End Page header-->
+<!-- Row -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap" id="FoodTable">
+                        <thead>
+                            <tr>
+                                <th scope="col">Yemek Adı</th>
+                                <th scope="col">Açıklama</th>
+                                <th scope="col">Porsiyon Miktarı</th>
+                                <th scope="col">Oluşturma Tarihi</th>
+                                <th scope="col">Düzenle</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="SetFoodList">
+                            @*@foreach (var x in Model)
+                            {
+                            <tr>
+                                <td>@x.food_name</td>
+                                <td>@x.food_description</td>
+                                <td>@x.unit_portion</td>
+                                <td>
+                                    <button class="btn btn-warning btnDuzenle" value="@x.food_id">Düzenle</button>
+                                    <button class="btn btn-danger btnSil" value="@x.food_id">Sil</button>
+                                </td>
+                                
+                            </tr>
+                            }*@
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row -->
+<!-- The Modal -->
+<div class="modal" id="ModalFoodAdd">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Yemek Ekleme</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="add_food_form" role="form" >
+
+                    <div class="form-group">
+                        <label class="control-label">Yemek Adı</label>
+                        <div>
+                            <input type="text" class="form-control input-lg" name="food_name" id="food_name" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Yemek Açıklama</label>
+                        <div>
+                            <input type="text" class="form-control input-lg" name="food_description" id="food_description">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Yemek Porsiyon</label>
+                        <div>
+                            <input type="number" class="form-control input-lg" name="unit_portion" id="unit_portion">
+                        </div>
+                    </div>
+
+                    <div class="form-group container">
+                        <div>
+                            <button id="AddFood" type="button" class="btn btn-success" data-bs-dismiss="modal">Ekle</button>
+
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">İptal</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="ModalFoodEdit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Yemek Düzenleme</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="edit_food_form" role="form">
+                    <input type="hidden" id="food_id" name="food_id" >
+
+                    <div class="form-group">
+                        <label class="control-label">Yemek Adı</label>
+                        <div>
+                            <input type="text" class="form-control input-lg" name="edit_food_name" id="edit_food_name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Yemek Açıklama</label>
+                        <div>
+                            <input type="text" class="form-control input-lg" name="edit_food_description" id="edit_food_description">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Yemek Porsiyon</label>
+                        <div>
+                            <input type="number" class="form-control input-lg" name="edit_unit_portion" id="edit_unit_portion">
+                        </div>
+                    </div>
+
+                    <div class="form-group container">
+                        <div>
+                            <button id="EditFood" type="button" class="btn btn-success" data-bs-dismiss="modal">Düzenle</button>
+
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">İptal</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+
+                <input type="hidden" name="edit_row_index" id="edit_row_index"/>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+

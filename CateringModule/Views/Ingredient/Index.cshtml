@@ -1,0 +1,60 @@
+﻿@using CateringModule.Models
+@model List<Ingredient>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!--Page header-->
+<div class="page-header">
+    <div class="page-leftheader">
+        <h4 class="page-title mb-0 text-primary">MALZEME LİSTESİ</h4>
+    </div>
+
+</div>
+<!--End Page header-->
+<!-- Row -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap" id="example1">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Malzeme Adı</th>
+                                <th scope="col">Açıklama</th>
+                                <th scope="col">Birim</th>
+                                <th scope="col">Birim Fiyat</th>
+                                <th scope="col">Birim Kalori</th>
+                                <th scope="col">GÜNCELLE</th>
+                                <th scope="col">SİL</th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            @foreach (var x in Model)
+                            {
+                            <tr>
+                                <td>@x.ingredient_id</td>
+                                <td>@x.ingredient_name</td>
+                                <td>@x.ingredient_description</td>
+                                <td>@x.ingredient_unit</td>
+                                <td>@x.unit_price</td>
+                                <td>@x.unit_calorie</td>
+                                <td><a class="btn btn-success">GÜNCELLE</a></td>
+                                <td><a class="btn btn-danger">SİL</a></td>
+                            </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row -->
+
