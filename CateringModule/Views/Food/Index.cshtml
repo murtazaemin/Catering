@@ -31,24 +31,12 @@
                                 <th scope="col">Açıklama</th>
                                 <th scope="col">Porsiyon Miktarı</th>
                                 <th scope="col">Oluşturma Tarihi</th>
-                                <th scope="col">Düzenle</th>
+                                <th scope="col">İşlemler</th>
 
                             </tr>
                         </thead>
                         <tbody id="SetFoodList">
-                            @*@foreach (var x in Model)
-                            {
-                            <tr>
-                                <td>@x.food_name</td>
-                                <td>@x.food_description</td>
-                                <td>@x.unit_portion</td>
-                                <td>
-                                    <button class="btn btn-warning btnDuzenle" value="@x.food_id">Düzenle</button>
-                                    <button class="btn btn-danger btnSil" value="@x.food_id">Sil</button>
-                                </td>
-                                
-                            </tr>
-                            }*@
+                          
                         </tbody>
                     </table>
                 </div>
@@ -95,7 +83,7 @@
                         <div>
                             <button id="AddFood" type="button" class="btn btn-success" data-bs-dismiss="modal">Ekle</button>
 
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">İptal</button>
+                            <button id="CancelFood" type="button" class="btn btn-danger" data-bs-dismiss="modal">İptal</button>
                         </div>
                     </div>
                 </form>

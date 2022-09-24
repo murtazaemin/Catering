@@ -43,24 +43,37 @@ namespace CateringModule.Controllers
         public JsonResult AddFood(Food food)
         {
             c.Foods.Add(food);
-            c.SaveChanges();
+            var Result = c.SaveChanges();
 
-            return Json(
-                new {
-                    Result = new
-                    {
-                        Food_Id = food.food_id,
-                        Food_Name = food.food_name,
-                        Food_Description = food.food_description,
-                        Food_Portion = food.unit_portion,
-                        Food_CreatedAt = food.created_at
-                    }, JsonRequestBehavior.AllowGet
-                });
+            if (Result > 0)
+                return Json("1");
+            else
+                return Json("0");
         }
+        //[HttpPost]
+        //public JsonResult AddFood(Food food)
+        //{
+          
+        //    c.Foods.Add(food);
+        //    c.SaveChanges();
+
+        //    return Json(
+        //        new {
+        //            Result = new
+        //            {
+        //                Food_Id = food.food_id,
+        //                Food_Name = food.food_name,
+        //                Food_Description = food.food_description,
+        //                Food_Portion = food.unit_portion,
+        //                Food_CreatedAt = food.created_at
+        //            }, JsonRequestBehavior.AllowGet
+        //        });
+        //}
 
         [HttpPost]
         public JsonResult DeleteFood(int id) 
         {
+        
             var food = c.Foods.Find(id);
             c.Foods.Remove(food);
             var Result = c.SaveChanges();
@@ -71,7 +84,7 @@ namespace CateringModule.Controllers
         }
 
         [HttpPost]
-        public JsonResult EditFood( Food food,int i)
+        public JsonResult EditFood( Food food)
         {
             var food_edit = c.Foods.FirstOrDefault(x => x.food_id == food.food_id);
 
@@ -81,19 +94,7 @@ namespace CateringModule.Controllers
 
             var Result = c.SaveChanges();
             if (Result > 0)
-                return Json(
-                new
-                {
-                    Result = new
-                    {
-                        Food_Id = food.food_id,
-                        Food_Name = food.food_name,
-                        Food_Description = food.food_description,
-                        Food_Portion = food.unit_portion,
-                        Row_Index = i
-                    },
-                    JsonRequestBehavior.AllowGet
-                });
+                return Json("1");
             else
                 return Json("0");
         }

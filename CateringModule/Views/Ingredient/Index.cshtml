@@ -11,7 +11,9 @@
     <div class="page-leftheader">
         <h4 class="page-title mb-0 text-primary">MALZEME LİSTESİ</h4>
     </div>
-
+    <div>
+        <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ModalIngredientAdd"><i class="fa fa-plus-square"></i> MALZEME EKLE</a>
+    </div>
 </div>
 <!--End Page header-->
 <!-- Row -->
@@ -20,35 +22,25 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered text-nowrap" id="example1">
+                    <table class="table table-bordered text-nowrap" id="IngredientTable">
                         <thead>
                             <tr>
-                                <th scope="col">ID</th>
+
                                 <th scope="col">Malzeme Adı</th>
                                 <th scope="col">Açıklama</th>
-                                <th scope="col">Birim</th>
+                                <th scope="col">Birimi</th>
                                 <th scope="col">Birim Fiyat</th>
                                 <th scope="col">Birim Kalori</th>
-                                <th scope="col">GÜNCELLE</th>
-                                <th scope="col">SİL</th>
+                                <th scope="col">KDV Oranı</th>
+                                <th scope="col">Minimum Miktar</th>
+                                <th scope="col">Maksimum Miktar
+                                <th scope="col">Muhasebe Kodu</th>
+                                <th scope="col">Oluşturulma Tarihi</th>
+                                <th scope="col">İşlemler</th>
+
                             </tr>
                         </thead>
-                        <tbody >
-                            @foreach (var x in Model)
-                            {
-                            <tr>
-                                <td>@x.ingredient_id</td>
-                                <td>@x.ingredient_name</td>
-                                <td>@x.ingredient_description</td>
-                                <td>@x.ingredient_unit</td>
-                                <td>@x.unit_price</td>
-                                <td>@x.unit_calorie</td>
-                                <td><a class="btn btn-success">GÜNCELLE</a></td>
-                                <td><a class="btn btn-danger">SİL</a></td>
-                            </tr>
-                            }
-
-
+                        <tbody id="SetIngredientList">
                         </tbody>
                     </table>
                 </div>
@@ -57,4 +49,198 @@
     </div>
 </div>
 <!-- End Row -->
+<!-- The Modal -->
+<div class="modal" id="ModalIngredientAdd">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Malzeme Ekleme</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="add_ingredient_form" role="form">
+
+                    <div class="form-group">
+                        <label class="control-label">Malzeme Adı</label>
+                        <div>
+                            <input type="text" class="form-control input-lg" name="ingredient_name" id="ingredient_name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Malzeme Açıklama</label>
+                        <div>
+                            <input type="text" class="form-control input-lg" name="ingredient_description" id="ingredient_description">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="ingredient_unit">Birimi</label>
+                            <select name="ingredient_unit" id="ingredient_unit" class="form-control">
+                                <option value="KG">KG</option>
+                                <option value="LT">LT</option>
+                                <option value="ADET">ADET</option>
+                                <option value="PAKET">PAKET</option>
+                            </select>
+
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Birim Kalori</label>
+                            <div>
+                                <input type="number" class="form-control input-lg" name="unit_calorie" id="unit_calorie">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Birim Fiyat</label>
+                            <div>
+                                <input type="number" class="form-control input-lg" name="unit_price" id="unit_price">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label">KDV Oranı</label>
+                            <div>
+                                <input type="number" class="form-control input-lg" name="tax_rate" id="tax_rate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Minimum Miktar</label>
+                            <div>
+                                <input type="number" class="form-control input-lg" name="min_quantity" id="min_quantity">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Maximum Miktar</label>
+                            <div>
+                                <input type="number" class="form-control input-lg" name="max_quantity" id="max_quantity">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Muhasebe Kodu</label>
+                        <div>
+                            <input type="text" class="form-control input-lg" name="accounting_code" id="accounting_code">
+                        </div>
+                    </div>
+
+                    <div class="form-group container">
+                        <div>
+                            <button id="AddIngredient" type="button" class="btn btn-success" data-bs-dismiss="modal">Ekle</button>
+
+                            <button id="CancelIngredient" type="button" class="btn btn-danger" data-bs-dismiss="modal">İptal</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="ModalIngredientEdit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Malzeme Düzenleme</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="edit_ingredient_form" role="form">
+
+                    <div class="form-group">
+                        <label class="control-label">Malzeme Adı</label>
+                        <div>
+                            <input type="text" class="form-control input-lg" name="ingredient_name" id="ingredient_name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Malzeme Açıklama</label>
+                        <div>
+                            <input type="text" class="form-control input-lg" name="ingredient_description" id="ingredient_description">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="ingredient_unit">Birimi</label>
+                            <select name="ingredient_unit" id="ingredient_unit" class="form-control">
+                                <option value="KG">KG</option>
+                                <option value="LT">LT</option>
+                                <option value="ADET">ADET</option>
+                                <option value="PAKET">PAKET</option>
+                            </select>
+
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Birim Kalori</label>
+                            <div>
+                                <input type="number" class="form-control input-lg" name="unit_calorie" id="unit_calorie">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Birim Fiyat</label>
+                            <div>
+                                <input type="number" class="form-control input-lg" name="unit_price" id="unit_price">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label">KDV Oranı</label>
+                            <div>
+                                <input type="number" class="form-control input-lg" name="tax_rate" id="tax_rate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Minimum Miktar</label>
+                            <div>
+                                <input type="number" class="form-control input-lg" name="min_quantity" id="min_quantity">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Maximum Miktar</label>
+                            <div>
+                                <input type="number" class="form-control input-lg" name="max_quantity" id="max_quantity">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Muhasebe Kodu</label>
+                        <div>
+                            <input type="text" class="form-control input-lg" name="accounting_code" id="accounting_code">
+                        </div>
+                    </div>
+
+                    <div class="form-group container">
+                        <div>
+                            <button id="EditIngredient" type="button" class="btn btn-success" data-bs-dismiss="modal">Düzenle</button>
+
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">İptal</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+
+                <input type="hidden" name="edit_row_index" id="edit_row_index" />
+            </div>
+
+        </div>
+    </div>
+</div>
 
