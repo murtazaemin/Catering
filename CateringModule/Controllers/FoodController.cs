@@ -13,7 +13,6 @@ namespace CateringModule.Controllers
         // GET: Food
         public ActionResult Index()
         {
-           // var foods = c.Foods.ToList();
             return View();
         }
 
@@ -30,11 +29,7 @@ namespace CateringModule.Controllers
 
             var totalCount = c.Foods.Count();
 
-            var test = c.Foods.OrderByDescending(x => x.created_at).Skip(skip).Take(pagesize);
-
-            List<Food> data = test.ToList();
-
-            
+            List<Food> data = c.Foods.OrderByDescending(x => x.created_at).Skip(skip).Take(pagesize).ToList();
 
             return Json(new { draw = draw, recordsFiltered = totalCount, recordsTotal = totalCount, data = data}, JsonRequestBehavior.AllowGet);
         }
@@ -50,25 +45,7 @@ namespace CateringModule.Controllers
             else
                 return Json("0");
         }
-        //[HttpPost]
-        //public JsonResult AddFood(Food food)
-        //{
-          
-        //    c.Foods.Add(food);
-        //    c.SaveChanges();
-
-        //    return Json(
-        //        new {
-        //            Result = new
-        //            {
-        //                Food_Id = food.food_id,
-        //                Food_Name = food.food_name,
-        //                Food_Description = food.food_description,
-        //                Food_Portion = food.unit_portion,
-        //                Food_CreatedAt = food.created_at
-        //            }, JsonRequestBehavior.AllowGet
-        //        });
-        //}
+        
 
         [HttpPost]
         public JsonResult DeleteFood(int id) 
